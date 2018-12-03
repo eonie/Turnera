@@ -1,3 +1,25 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.15.RELEASE'
+    }
+    repositories {
+        maven { url 'http://maven.parim.net/nexus/content/groups/public/' }
+        mavenCentral()
+        maven { url "https://repo.spring.io/plugins-release" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+apply plugin: 'org.springframework.boot'
 dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    // compile('org.flywaydb:flyway-core')
+    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0')
+    // compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    runtime('com.h2database:h2')
+    compile('mysql:mysql-connector-java')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
     compile group: 'io.netty', name: 'netty-all', version: '4.1.32.Final'
 }
