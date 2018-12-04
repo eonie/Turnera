@@ -11,15 +11,16 @@ import org.turnera.server.repository.jpa.UserRepository;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
+    //@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public User findOne(Long id){
         return userRepository.findOne(id);
     }
-    @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
     public User save(User user){
         return userRepository.save(user);
     }
 
+    //@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Iterable<User> findAll(){
         return userRepository.findAll();
     }
