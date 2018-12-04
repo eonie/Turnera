@@ -22,7 +22,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
  * Created by guozp on 2017/8/29.
  */
 //@Component 事务依然生效
-@Configuration
+//@Configuration
 public class TxAnnoConfig {
     /*事务拦截类型*/
     @Bean("txSource")

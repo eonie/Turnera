@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Arrays;
 
 @SpringBootApplication
-//@EnableTransactionManagement(proxyTargetClass = true)
+@EnableTransactionManagement(proxyTargetClass = true)
 public class TurneraApplication {
     public static void main(String[] args) {
         SpringApplication.run(TurneraApplication.class);
