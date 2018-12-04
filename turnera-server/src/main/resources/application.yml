@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: local
+
+
+---
+#本地环境
+spring:
+  profiles: local
+  datasource:
+    tomcat:
+      default-read-only: true
+  application:
+    name: 生产环境
+
+logging:
+  level:
+    org.springframework.transaction: trace
+---
+#集群测试环境
+spring:
+  profiles: maxscale
+  datasource:
+    master:
+      #driverClassName: oracle.jdbc.driver.OracleDriver
+      url: jdbc:MySQL://192.168.0.11:4006/turnera?characterEncoding=utf-8&useSSL=false
+      username: turnera
+      password: manager1
+  application:
+    name: 测试环境
