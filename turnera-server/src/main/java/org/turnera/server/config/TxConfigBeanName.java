@@ -1,15 +1,12 @@
 package org.turnera.server.config;
 
-import java.util.Properties;
-
-
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
+
+import java.util.Properties;
 
 /**
  * Created by guozp on 2017/8/28.
