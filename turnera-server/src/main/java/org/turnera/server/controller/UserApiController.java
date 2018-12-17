@@ -1,9 +1,19 @@
 package org.turnera.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 import org.turnera.server.entity.User;
+import org.turnera.server.schdule.MessagePrinterTask;
 import org.turnera.server.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
 
 
 @RestController
@@ -12,8 +22,9 @@ public class UserApiController {
 
 	@Autowired
 	private UserService userService;
-
-
+	@Autowired
+	TaskScheduler taskScheduler ;
+	private static Map<String,ScheduledFuture<?>> futures = new HashMap<>();
 	@PutMapping("")
 	public User save(@RequestBody User user){
 		return userService.save(user);
@@ -23,7 +34,22 @@ public class UserApiController {
 		return userService.findOne(id);
 	}
 	@GetMapping("")
-	public Iterable<User> findAll(){
-		return userService.findAll();
+	public Page<User> findAll(@PageableDefault Pageable pageable){
+		return userService.findAll(pageable);
+	}
+	@GetMapping("schdule")
+	public void schdule(@RequestParam("id") Long id){
+		ScheduledFuture future = taskScheduler.schedule(new MessagePrinterTask(id.toString()), new CronTrigger("0/5 */1 * * * *"));
+		futures.put(id.toString(), future);
+	}
+	@GetMapping("schdules")
+	public Map<String,ScheduledFuture<?>> schdules(){
+		return futures;
+	}
+	@GetMapping("schdules/{id}/stop")
+	public Map<String,ScheduledFuture<?>> schdules(@PathVariable("id") String key){
+		ScheduledFuture future = futures.get(key);
+		future.cancel(false);
+		return futures;
 	}
 }

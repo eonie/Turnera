@@ -31,6 +31,7 @@ gradle-app.setting
 *.ipr
 *.iws
 **/out
+local.properties
 
 #vscode
 .vscode
