@@ -5,10 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 import org.turnera.server.entity.User;
 import org.turnera.server.schdule.MessagePrinterTask;
+import org.turnera.server.schdule.cron.QuartzCronTrigger;
 import org.turnera.server.service.UserService;
 
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class UserApiController {
 	}
 	@GetMapping("schdule")
 	public void schdule(@RequestParam("id") Long id){
-		ScheduledFuture future = taskScheduler.schedule(new MessagePrinterTask(id.toString()), new CronTrigger("0/5 */1 * * * *"));
+		ScheduledFuture future = taskScheduler.schedule(new MessagePrinterTask(id.toString()), new QuartzCronTrigger("0/5 */1 * * * ?"));
 		futures.put(id.toString(), future);
 	}
 	@GetMapping("schdules")
