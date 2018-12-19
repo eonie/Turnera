@@ -7,4 +7,7 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.TYPE)
 public @interface TurneraJob {
+	String name() default "";
+	String cron() default "";
+	boolean isSharding() default  false;
 }

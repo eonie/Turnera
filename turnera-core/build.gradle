@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.7'
+    }
+}
+
+apply plugin: 'com.google.protobuf'
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.32.Final'
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.6.1'
+    implementation  group: 'org.springframework', name: 'spring-context', version: '4.3.21.RELEASE'
+}
+
+protobuf { //protobuf生成的配置
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.6.1'
+    }
+    generatedFilesBaseDir = "$projectDir/src/"
+}

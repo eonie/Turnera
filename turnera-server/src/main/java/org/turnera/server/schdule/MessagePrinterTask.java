@@ -1,14 +1,13 @@
 package org.turnera.server.schdule;
 
 public class MessagePrinterTask implements Runnable {
-
-	private String message;
-
-	public MessagePrinterTask(String message) {
-		this.message = message;
+	private String taskName ;
+	public MessagePrinterTask(String taskName) {
+		this.taskName = taskName;
 	}
+
+	@Override
 	public void run() {
-		System.out.println(message);
+		System.out.println(this.taskName);
 	}
-
 }

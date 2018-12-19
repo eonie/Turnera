@@ -28,6 +28,6 @@ dependencies {
     compile('org.modelmapper:modelmapper:2.3.0')
     runtime('com.h2database:h2')
     compile('mysql:mysql-connector-java')
+    compile project(':turnera-core')
     compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile group: 'io.netty', name: 'netty-all', version: '4.1.32.Final'
 }

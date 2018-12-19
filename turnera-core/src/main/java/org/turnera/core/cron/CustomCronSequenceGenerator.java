@@ -1,4 +1,4 @@
-package org.turnera.server.schdule.cron;
+package org.turnera.core.cron;
 
 import org.springframework.util.StringUtils;
 

@@ -1,8 +1,7 @@
-package org.turnera.server.schdule.cron;
+package org.turnera.server.utils;
 
 import net.redhogs.cronparser.CronExpressionDescriptor;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.util.Locale;

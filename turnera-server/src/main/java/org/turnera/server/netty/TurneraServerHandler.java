@@ -9,14 +9,15 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
 @ChannelHandler.Sharable                                        //1
-public class EchoServerHandler extends
+public class TurneraServerHandler extends
         ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx,
                             Object msg) {
         ByteBuf in = (ByteBuf) msg;
-        System.out.println("Server received: " + in.toString(CharsetUtil.UTF_8));        //2
+        String msgStr = in.toString(CharsetUtil.UTF_8);    //2
+
         ctx.write(in);                            //3
     }
 
