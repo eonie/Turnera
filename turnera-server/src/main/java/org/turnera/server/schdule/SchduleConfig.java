@@ -2,23 +2,18 @@ package org.turnera.server.schdule;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @Configuration
 public class SchduleConfig {
 
-	@Bean
-	public TaskExecutor taskExecutor(){
-		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-		taskExecutor.setCorePoolSize(5);
-		taskExecutor.setMaxPoolSize(10);
-		taskExecutor.setQueueCapacity(25);
-		return taskExecutor;
-	}
+
 	@Bean
 	public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
+	    ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+	    threadPoolTaskScheduler.setPoolSize(100);
+	    threadPoolTaskScheduler.setThreadPriority(5);
+	    threadPoolTaskScheduler.setRemoveOnCancelPolicy(true);
 		return new ThreadPoolTaskScheduler();
 	}
 

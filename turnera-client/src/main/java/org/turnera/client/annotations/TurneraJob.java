@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 public @interface TurneraJob {
 	String name() default "";
 	String cron() default "";
+	String group() default "Default";
 	boolean isSharding() default  false;
 }

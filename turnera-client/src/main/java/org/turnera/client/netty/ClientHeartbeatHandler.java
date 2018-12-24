@@ -8,6 +8,7 @@ import org.turnera.core.model.protobuf.PacketProto;
 import static org.turnera.core.model.protobuf.PacketProto.Packet.newBuilder;
 
 public class ClientHeartbeatHandler extends ChannelInboundHandlerAdapter {
+
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("--- Server is active ---");
@@ -16,9 +17,9 @@ public class ClientHeartbeatHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("--- Server is inactive ---");
-
 		// 10s 之后尝试重新连接服务器
-		System.out.println("10s 之后尝试重新连接服务器...");
+		TurneraClient.isActive = false;
+		System.out.println("Inactive, 10s 之后尝试重新连接服务器...");
 		Thread.sleep(10 * 1000);
 		TurneraClient.doConnect();
 	}
@@ -32,8 +33,17 @@ public class ClientHeartbeatHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		System.out.println("连接出现异常");
+		while(!TurneraClient.isActive) {
+			try {
+				System.out.println("Exception, 10s 之后尝试重新连接服务器...");
+				Thread.sleep(10 * 1000);
+				TurneraClient.doConnect();
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

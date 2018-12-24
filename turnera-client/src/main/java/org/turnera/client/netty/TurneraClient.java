@@ -19,9 +19,19 @@ import static org.turnera.core.model.protobuf.PacketProto.Packet.newBuilder;
 public class TurneraClient {
 	private static Channel ch;
 	private static Bootstrap bootstrap;
+	private static NioEventLoopGroup workGroup;
 
-	public static void main(String[] args) {
-		NioEventLoopGroup workGroup = new NioEventLoopGroup();
+	private static String serverHost;
+	private static int serverPort;
+	public static boolean isActive;
+
+	TurneraClient (String serverHost, int serverPort){
+		this.serverHost = serverHost;
+		this.serverPort = serverPort;
+	}
+
+	public static void start() {
+		workGroup = new NioEventLoopGroup();
 		try {
 			bootstrap = new Bootstrap();
 			bootstrap
@@ -66,6 +76,16 @@ public class TurneraClient {
 	 * @throws InterruptedException
 	 */
 	public static void doConnect() throws InterruptedException {
-		ch = bootstrap.connect("127.0.0.1", 20000).sync().channel();
+		ch = bootstrap.connect(serverHost, serverPort).sync().channel();
+		isActive = true;
+	}
+
+	public static Channel getChannel(){
+		return ch;
+	}
+
+	public static void main(String[] args) {
+		TurneraClient turneraClient = new TurneraClient("localhost", 20000);
+		turneraClient.start();
 	}
 }

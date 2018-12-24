@@ -23,15 +23,15 @@ public final class PacketProto {
      * 包类型
      * </pre>
      *
-     * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+     * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
      */
-    boolean hasPacketType();
+    int getPacketTypeValue();
     /**
      * <pre>
      * 包类型
      * </pre>
      *
-     * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+     * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
      */
     org.turnera.core.model.protobuf.PacketProto.Packet.PacketType getPacketType();
 
@@ -40,15 +40,7 @@ public final class PacketProto {
      * 数据部分（可选，心跳包不包含数据部分）
      * </pre>
      *
-     * <code>optional string data = 2;</code>
-     */
-    boolean hasData();
-    /**
-     * <pre>
-     * 数据部分（可选，心跳包不包含数据部分）
-     * </pre>
-     *
-     * <code>optional string data = 2;</code>
+     * <code>string data = 2;</code>
      */
     java.lang.String getData();
     /**
@@ -56,16 +48,12 @@ public final class PacketProto {
      * 数据部分（可选，心跳包不包含数据部分）
      * </pre>
      *
-     * <code>optional string data = 2;</code>
+     * <code>string data = 2;</code>
      */
     com.google.protobuf.ByteString
         getDataBytes();
   }
   /**
-   * <pre>
-   *syntax = "proto3";
-   * </pre>
-   *
    * Protobuf type {@code org.turnera.core.model.protobuf.Packet}
    */
   public  static final class Packet extends
@@ -78,7 +66,7 @@ public final class PacketProto {
       super(builder);
     }
     private Packet() {
-      packetType_ = 1;
+      packetType_ = 0;
       data_ = "";
     }
 
@@ -108,24 +96,18 @@ public final class PacketProto {
               break;
             case 8: {
               int rawValue = input.readEnum();
-                @SuppressWarnings("deprecation")
-              org.turnera.core.model.protobuf.PacketProto.Packet.PacketType value = org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(1, rawValue);
-              } else {
-                bitField0_ |= 0x00000001;
-                packetType_ = rawValue;
-              }
+
+              packetType_ = rawValue;
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
-              data_ = bs;
+              java.lang.String s = input.readStringRequireUtf8();
+
+              data_ = s;
               break;
             }
             default: {
-              if (!parseUnknownField(
+              if (!parseUnknownFieldProto3(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -170,17 +152,18 @@ public final class PacketProto {
        * 心跳包
        * </pre>
        *
-       * <code>HEARTBEAT = 1;</code>
+       * <code>HEARTBEAT = 0;</code>
        */
-      HEARTBEAT(1),
+      HEARTBEAT(0),
       /**
        * <pre>
        * 非心跳包
        * </pre>
        *
-       * <code>DATA = 2;</code>
+       * <code>DATA = 1;</code>
        */
-      DATA(2),
+      DATA(1),
+      UNRECOGNIZED(-1),
       ;
 
       /**
@@ -188,20 +171,24 @@ public final class PacketProto {
        * 心跳包
        * </pre>
        *
-       * <code>HEARTBEAT = 1;</code>
+       * <code>HEARTBEAT = 0;</code>
        */
-      public static final int HEARTBEAT_VALUE = 1;
+      public static final int HEARTBEAT_VALUE = 0;
       /**
        * <pre>
        * 非心跳包
        * </pre>
        *
-       * <code>DATA = 2;</code>
+       * <code>DATA = 1;</code>
        */
-      public static final int DATA_VALUE = 2;
+      public static final int DATA_VALUE = 1;
 
 
       public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
         return value;
       }
 
@@ -215,8 +202,8 @@ public final class PacketProto {
 
       public static PacketType forNumber(int value) {
         switch (value) {
-          case 1: return HEARTBEAT;
-          case 2: return DATA;
+          case 0: return HEARTBEAT;
+          case 1: return DATA;
           default: return null;
         }
       }
@@ -254,6 +241,9 @@ public final class PacketProto {
           throw new java.lang.IllegalArgumentException(
             "EnumValueDescriptor is not for this type.");
         }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
         return VALUES[desc.getIndex()];
       }
 
@@ -266,7 +256,6 @@ public final class PacketProto {
       // @@protoc_insertion_point(enum_scope:org.turnera.core.model.protobuf.Packet.PacketType)
     }
 
-    private int bitField0_;
     public static final int PACKETTYPE_FIELD_NUMBER = 1;
     private int packetType_;
     /**
@@ -274,22 +263,22 @@ public final class PacketProto {
      * 包类型
      * </pre>
      *
-     * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+     * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
      */
-    public boolean hasPacketType() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+    public int getPacketTypeValue() {
+      return packetType_;
     }
     /**
      * <pre>
      * 包类型
      * </pre>
      *
-     * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+     * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
      */
     public org.turnera.core.model.protobuf.PacketProto.Packet.PacketType getPacketType() {
       @SuppressWarnings("deprecation")
       org.turnera.core.model.protobuf.PacketProto.Packet.PacketType result = org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.valueOf(packetType_);
-      return result == null ? org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.HEARTBEAT : result;
+      return result == null ? org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.UNRECOGNIZED : result;
     }
 
     public static final int DATA_FIELD_NUMBER = 2;
@@ -299,17 +288,7 @@ public final class PacketProto {
      * 数据部分（可选，心跳包不包含数据部分）
      * </pre>
      *
-     * <code>optional string data = 2;</code>
-     */
-    public boolean hasData() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <pre>
-     * 数据部分（可选，心跳包不包含数据部分）
-     * </pre>
-     *
-     * <code>optional string data = 2;</code>
+     * <code>string data = 2;</code>
      */
     public java.lang.String getData() {
       java.lang.Object ref = data_;
@@ -319,9 +298,7 @@ public final class PacketProto {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          data_ = s;
-        }
+        data_ = s;
         return s;
       }
     }
@@ -330,7 +307,7 @@ public final class PacketProto {
      * 数据部分（可选，心跳包不包含数据部分）
      * </pre>
      *
-     * <code>optional string data = 2;</code>
+     * <code>string data = 2;</code>
      */
     public com.google.protobuf.ByteString
         getDataBytes() {
@@ -353,10 +330,6 @@ public final class PacketProto {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasPacketType()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -364,10 +337,10 @@ public final class PacketProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (packetType_ != org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.HEARTBEAT.getNumber()) {
         output.writeEnum(1, packetType_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (!getDataBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, data_);
       }
       unknownFields.writeTo(output);
@@ -379,11 +352,11 @@ public final class PacketProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (packetType_ != org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.HEARTBEAT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, packetType_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (!getDataBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, data_);
       }
       size += unknownFields.getSerializedSize();
@@ -402,15 +375,9 @@ public final class PacketProto {
       org.turnera.core.model.protobuf.PacketProto.Packet other = (org.turnera.core.model.protobuf.PacketProto.Packet) obj;
 
       boolean result = true;
-      result = result && (hasPacketType() == other.hasPacketType());
-      if (hasPacketType()) {
-        result = result && packetType_ == other.packetType_;
-      }
-      result = result && (hasData() == other.hasData());
-      if (hasData()) {
-        result = result && getData()
-            .equals(other.getData());
-      }
+      result = result && packetType_ == other.packetType_;
+      result = result && getData()
+          .equals(other.getData());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -422,14 +389,10 @@ public final class PacketProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasPacketType()) {
-        hash = (37 * hash) + PACKETTYPE_FIELD_NUMBER;
-        hash = (53 * hash) + packetType_;
-      }
-      if (hasData()) {
-        hash = (37 * hash) + DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getData().hashCode();
-      }
+      hash = (37 * hash) + PACKETTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + packetType_;
+      hash = (37 * hash) + DATA_FIELD_NUMBER;
+      hash = (53 * hash) + getData().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -526,10 +489,6 @@ public final class PacketProto {
       return builder;
     }
     /**
-     * <pre>
-     *syntax = "proto3";
-     * </pre>
-     *
      * Protobuf type {@code org.turnera.core.model.protobuf.Packet}
      */
     public static final class Builder extends
@@ -567,10 +526,10 @@ public final class PacketProto {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        packetType_ = 1;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        packetType_ = 0;
+
         data_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
+
         return this;
       }
 
@@ -597,17 +556,8 @@ public final class PacketProto {
       @java.lang.Override
       public org.turnera.core.model.protobuf.PacketProto.Packet buildPartial() {
         org.turnera.core.model.protobuf.PacketProto.Packet result = new org.turnera.core.model.protobuf.PacketProto.Packet(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
         result.packetType_ = packetType_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
         result.data_ = data_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -656,11 +606,10 @@ public final class PacketProto {
 
       public Builder mergeFrom(org.turnera.core.model.protobuf.PacketProto.Packet other) {
         if (other == org.turnera.core.model.protobuf.PacketProto.Packet.getDefaultInstance()) return this;
-        if (other.hasPacketType()) {
-          setPacketType(other.getPacketType());
+        if (other.packetType_ != 0) {
+          setPacketTypeValue(other.getPacketTypeValue());
         }
-        if (other.hasData()) {
-          bitField0_ |= 0x00000002;
+        if (!other.getData().isEmpty()) {
           data_ = other.data_;
           onChanged();
         }
@@ -671,9 +620,6 @@ public final class PacketProto {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasPacketType()) {
-          return false;
-        }
         return true;
       }
 
@@ -695,43 +641,54 @@ public final class PacketProto {
         }
         return this;
       }
-      private int bitField0_;
 
-      private int packetType_ = 1;
+      private int packetType_ = 0;
       /**
        * <pre>
        * 包类型
        * </pre>
        *
-       * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+       * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
        */
-      public boolean hasPacketType() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+      public int getPacketTypeValue() {
+        return packetType_;
       }
       /**
        * <pre>
        * 包类型
        * </pre>
        *
-       * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+       * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+       */
+      public Builder setPacketTypeValue(int value) {
+        packetType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 包类型
+       * </pre>
+       *
+       * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
        */
       public org.turnera.core.model.protobuf.PacketProto.Packet.PacketType getPacketType() {
         @SuppressWarnings("deprecation")
         org.turnera.core.model.protobuf.PacketProto.Packet.PacketType result = org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.valueOf(packetType_);
-        return result == null ? org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.HEARTBEAT : result;
+        return result == null ? org.turnera.core.model.protobuf.PacketProto.Packet.PacketType.UNRECOGNIZED : result;
       }
       /**
        * <pre>
        * 包类型
        * </pre>
        *
-       * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+       * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
        */
       public Builder setPacketType(org.turnera.core.model.protobuf.PacketProto.Packet.PacketType value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000001;
+        
         packetType_ = value.getNumber();
         onChanged();
         return this;
@@ -741,11 +698,11 @@ public final class PacketProto {
        * 包类型
        * </pre>
        *
-       * <code>required .org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
+       * <code>.org.turnera.core.model.protobuf.Packet.PacketType packetType = 1;</code>
        */
       public Builder clearPacketType() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        packetType_ = 1;
+        
+        packetType_ = 0;
         onChanged();
         return this;
       }
@@ -756,17 +713,7 @@ public final class PacketProto {
        * 数据部分（可选，心跳包不包含数据部分）
        * </pre>
        *
-       * <code>optional string data = 2;</code>
-       */
-      public boolean hasData() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <pre>
-       * 数据部分（可选，心跳包不包含数据部分）
-       * </pre>
-       *
-       * <code>optional string data = 2;</code>
+       * <code>string data = 2;</code>
        */
       public java.lang.String getData() {
         java.lang.Object ref = data_;
@@ -774,9 +721,7 @@ public final class PacketProto {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            data_ = s;
-          }
+          data_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -787,7 +732,7 @@ public final class PacketProto {
        * 数据部分（可选，心跳包不包含数据部分）
        * </pre>
        *
-       * <code>optional string data = 2;</code>
+       * <code>string data = 2;</code>
        */
       public com.google.protobuf.ByteString
           getDataBytes() {
@@ -807,14 +752,14 @@ public final class PacketProto {
        * 数据部分（可选，心跳包不包含数据部分）
        * </pre>
        *
-       * <code>optional string data = 2;</code>
+       * <code>string data = 2;</code>
        */
       public Builder setData(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  
         data_ = value;
         onChanged();
         return this;
@@ -824,10 +769,10 @@ public final class PacketProto {
        * 数据部分（可选，心跳包不包含数据部分）
        * </pre>
        *
-       * <code>optional string data = 2;</code>
+       * <code>string data = 2;</code>
        */
       public Builder clearData() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        
         data_ = getDefaultInstance().getData();
         onChanged();
         return this;
@@ -837,14 +782,15 @@ public final class PacketProto {
        * 数据部分（可选，心跳包不包含数据部分）
        * </pre>
        *
-       * <code>optional string data = 2;</code>
+       * <code>string data = 2;</code>
        */
       public Builder setDataBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  checkByteStringIsUtf8(value);
+        
         data_ = value;
         onChanged();
         return this;
@@ -852,7 +798,7 @@ public final class PacketProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
       @java.lang.Override
@@ -875,7 +821,7 @@ public final class PacketProto {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<Packet>
+    private static final com.google.protobuf.Parser<Packet>
         PARSER = new com.google.protobuf.AbstractParser<Packet>() {
       @java.lang.Override
       public Packet parsePartialFrom(
@@ -918,11 +864,11 @@ public final class PacketProto {
     java.lang.String[] descriptorData = {
       "\n#org.turnera.core.proto/packet.proto\022\037o" +
       "rg.turnera.core.model.protobuf\"\205\001\n\006Packe" +
-      "t\022F\n\npacketType\030\001 \002(\01622.org.turnera.core" +
+      "t\022F\n\npacketType\030\001 \001(\01622.org.turnera.core" +
       ".model.protobuf.Packet.PacketType\022\014\n\004dat" +
-      "a\030\002 \001(\t\"%\n\nPacketType\022\r\n\tHEARTBEAT\020\001\022\010\n\004" +
-      "DATA\020\002B.\n\037org.turnera.core.model.protobu" +
-      "fB\013PacketProto"
+      "a\030\002 \001(\t\"%\n\nPacketType\022\r\n\tHEARTBEAT\020\000\022\010\n\004" +
+      "DATA\020\001B.\n\037org.turnera.core.model.protobu" +
+      "fB\013PacketProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -2,7 +2,6 @@ package org.turnera.server.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -14,11 +13,11 @@ import io.netty.handler.timeout.IdleStateHandler;
 import org.turnera.core.model.protobuf.PacketProto;
 
 
-public class TerneraServer {
+public class TurneraServer {
 
 	private final int port;
 
-	public TerneraServer(int port) {
+	public TurneraServer(int port) {
 		this.port = port;
 	}
 
@@ -52,7 +51,7 @@ public class TerneraServer {
 	}
 
 	public static void main(String[] args) throws Exception {
-		TerneraServer turneraServer = new TerneraServer(20000);
+		TurneraServer turneraServer = new TurneraServer(20000);
 		turneraServer.start();
 	}
 }
