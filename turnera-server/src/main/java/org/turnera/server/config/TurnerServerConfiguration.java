@@ -7,10 +7,10 @@ import org.turnera.server.netty.TurneraServer;
 @Configuration
 public class TurnerServerConfiguration {
 
-    @Bean
+    @Bean()
     public TurneraServer turneraServer() throws Exception {
         TurneraServer turneraServer = new TurneraServer(20000);
-        turneraServer.start();
+        //turneraServer.start();
         return turneraServer;
     }
 }

@@ -1,5 +1,6 @@
 package org.turnera.server.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,11 @@ public class UserApiController {
 	}
 	@GetMapping("")
 	public Page<User> findAll(@PageableDefault Pageable pageable){
+		return userService.findAll(pageable);
+	}
+	@GetMapping("views")
+	@JsonView(User.ListView.class)
+	public Page<User> findAllWithJsonView(@PageableDefault Pageable pageable){
 		return userService.findAll(pageable);
 	}
 	@GetMapping("schdule")

@@ -25,7 +25,6 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-undertow'
     // compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.modelmapper:modelmapper:2.3.0')
     runtime('com.h2database:h2')
     compile('mysql:mysql-connector-java')
     compile project(':turnera-core')

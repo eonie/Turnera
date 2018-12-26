@@ -1,9 +1,12 @@
 package org.turnera.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "tur_user")
@@ -40,9 +43,12 @@ public class User {
         this.email = email;
     }
 
+    public interface ListView {};
     @Id
     @GeneratedValue
+    @JsonView(ListView.class)
     private Long id;
+    //@JsonView(ListView.class)
     private String username;
     private String name;
     private String email;
