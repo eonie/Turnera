@@ -1,29 +1,49 @@
 package org.turnera.server.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.turnera.core.model.protobuf.PacketProto;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
+@Component
+@ConfigurationProperties(prefix = "turnera")
 public class TurneraServer {
-
-	private final int port;
+	private static Logger logger = LoggerFactory.getLogger(TurneraServer.class);
+	/**
+	 * boss 线程组用于处理连接工作
+	 */
+	private EventLoopGroup acceptorGroup = new NioEventLoopGroup();
+	/**
+	 * work 线程组用于数据处理
+	 */
+	private EventLoopGroup workerGroup = new NioEventLoopGroup();
+	private int port = 20000;
 
 	public TurneraServer(int port) {
 		this.port = port;
 	}
+	public TurneraServer() {}
 
+	/**
+	 * 启动Netty Server
+	 *
+	 * @throws InterruptedException
+	 */
+	@PostConstruct
 	public void start() throws Exception {
-		NioEventLoopGroup acceptorGroup = new NioEventLoopGroup(1);
-		NioEventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			bootstrap
@@ -39,15 +59,22 @@ public class TurneraServer {
 							pipeline.addLast(new ServerHeartbeatHandler());
 						}
 					});
-			Channel ch = bootstrap.bind(port).sync().channel();
-			System.out.println("Server has started...");
-			ch.closeFuture().sync();
+//			Channel ch = bootstrap.bind(port).sync().channel();
+//			ch.closeFuture().sync();
+			ChannelFuture future = bootstrap.bind(port).sync();
+			if (future.isSuccess()) {
+				logger.info("Netty Server started");
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} finally {
-			acceptorGroup.shutdownGracefully();
-			workerGroup.shutdownGracefully();
 		}
+	}
+
+	@PreDestroy
+	public void destory() throws InterruptedException {
+		acceptorGroup.shutdownGracefully().sync();
+		workerGroup.shutdownGracefully().sync();
+		logger.info("关闭Netty");
 	}
 
 	public static void main(String[] args) throws Exception {

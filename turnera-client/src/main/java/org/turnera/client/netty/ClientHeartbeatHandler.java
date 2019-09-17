@@ -9,6 +9,7 @@ import static org.turnera.core.model.protobuf.PacketProto.Packet.newBuilder;
 
 public class ClientHeartbeatHandler extends ChannelInboundHandlerAdapter {
 
+
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("--- Server is active ---");

@@ -18,7 +18,7 @@ subprojects {
     apply plugin: 'eclipse'
     group = 'net.parim'
     version = '0.1.1'
-    
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = "UTF-8"
     dependencies {
         // Use JUnit test framework
         testImplementation 'junit:junit:4.12'

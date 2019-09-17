@@ -4,12 +4,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.turnera.core.model.protobuf.PacketProto;
 
 import java.net.InetSocketAddress;
 
 public class ServerHeartbeatHandler extends ChannelInboundHandlerAdapter {
-
+	private static Logger logger = LoggerFactory.getLogger(ServerHeartbeatHandler.class);
 	// 心跳丢失计数器
 	private int counter;
 
@@ -57,17 +59,17 @@ public class ServerHeartbeatHandler extends ChannelInboundHandlerAdapter {
 			if (counter >= 3) {
 				// 连续丢失3个心跳包 (断开连接)
 				ctx.channel().close().sync();
-				System.out.println("已与Client断开连接");
+				logger.info("已与Client断开连接");
 			} else {
 				counter++;
-				System.out.println("丢失了第 " + counter + " 个心跳包");
+				logger.info("丢失了第 " + counter + " 个心跳包");
 			}
 		}
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		System.out.println("连接出现异常");
+		logger.error("连接出现异常");
 	}
 
 	/**
@@ -80,7 +82,7 @@ public class ServerHeartbeatHandler extends ChannelInboundHandlerAdapter {
 		// 将心跳丢失计数器置为0
 		counter = 0;
 		InetSocketAddress inetSocketAddress = (InetSocketAddress)ctx.channel().remoteAddress();
-		System.out.println("收到" + inetSocketAddress.getAddress().getHostAddress() + ":" + inetSocketAddress.getPort() + "心跳包");
+		logger.debug("收到" + inetSocketAddress.getAddress().getHostAddress() + ":" + inetSocketAddress.getPort() + "心跳包");
 		ReferenceCountUtil.release(packet);
 	}
 
@@ -94,7 +96,7 @@ public class ServerHeartbeatHandler extends ChannelInboundHandlerAdapter {
 		// 将心跳丢失计数器置为0
 		counter = 0;
 		String data = packet.getData();
-		System.out.println(data);
+		logger.info(data);
 		ReferenceCountUtil.release(packet);
 	}
 }

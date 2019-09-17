@@ -58,7 +58,7 @@ public class TurneraClient {
 				Thread.sleep(num * 1000);
 				PacketProto.Packet.Builder builder = newBuilder();
 				builder.setPacketType(PacketProto.Packet.PacketType.DATA);
-				builder.setData("我是数据包（非心跳包） " + num);
+				builder.setData("我是数据包(非心跳包)" + num);
 				PacketProto.Packet packet = builder.build();
 				ch.writeAndFlush(packet);
 			}
