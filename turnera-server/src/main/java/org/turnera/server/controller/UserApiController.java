@@ -9,7 +9,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.web.bind.annotation.*;
 import org.turnera.core.cron.QuartzCronTrigger;
 import org.turnera.server.entity.User;
-import org.turnera.server.schdule.MessagePrinterTask;
+import org.turnera.server.schedule.MessagePrinterTask;
 import org.turnera.server.service.UserService;
 
 import java.util.HashMap;
@@ -43,16 +43,16 @@ public class UserApiController {
 	public Page<User> findAllWithJsonView(@PageableDefault Pageable pageable){
 		return userService.findAll(pageable);
 	}
-	@GetMapping("schdule")
-	public void schdule(@RequestParam("id") Long id){
+	@GetMapping("schedule")
+	public void schedule(@RequestParam("id") Long id){
 		ScheduledFuture future = taskScheduler.schedule(new MessagePrinterTask(id.toString()), new QuartzCronTrigger("0/5 */1 * * * ?"));
 		futures.put(id.toString(), future);
 	}
-	@GetMapping("schdules")
+	@GetMapping("schedules")
 	public Map<String,ScheduledFuture<?>> schdules(){
 		return futures;
 	}
-	@GetMapping("schdules/{id}/stop")
+	@GetMapping("schedules/{id}/stop")
 	public Map<String,ScheduledFuture<?>> schdules(@PathVariable("id") String key){
 		ScheduledFuture future = futures.get(key);
 		future.cancel(false);

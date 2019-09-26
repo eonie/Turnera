@@ -1,4 +1,4 @@
-package org.turnera.server.schdule;
+package org.turnera.server.schedule;
 
 public class MessagePrinterTask implements Runnable {
 	private String taskName ;

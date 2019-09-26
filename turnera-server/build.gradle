@@ -31,4 +31,6 @@ dependencies {
     compile('mysql:mysql-connector-java')
     compile project(':turnera-core')
     compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('io.atomix:atomix:3.1.5')
+    compile('io.atomix:atomix-raft:3.1.5')
 }

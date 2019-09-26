@@ -1,30 +1,27 @@
-spring:
-  profiles:
-    active: maxscale
-
-
+logging:
+  pattern:
+    console: "%clr(%d{yy-MM-dd E HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(%logger{0}){blue} %clr(%m){faint}%n"
+  level:
+    org.springframework.transaction: trace
 ---
 #本地环境
 spring:
   profiles: local
-  datasource:
-    tomcat:
-      default-read-only: true
   application:
-    name: 生产环境
+    name: 本地环境
 
 logging:
   level:
     org.springframework.transaction: trace
 ---
-#集群测试环境
+#生产环境
 spring:
-  profiles: maxscale
+  main:
+    banner-mode: "off"
+  profiles: prod
   datasource:
-    master:
-      #driverClassName: oracle.jdbc.driver.OracleDriver
-      url: jdbc:MySQL://192.168.0.11:4006/turnera?characterEncoding=utf-8&useSSL=false
-      username: turnera
-      password: manager1
+    url: jdbc:mysql://192.168.0.11:4006/turnera?characterEncoding=utf-8&useSSL=false
+    username: turnera
+    password: manager1
   application:
     name: 测试环境
