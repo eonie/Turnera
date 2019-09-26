@@ -16,6 +16,7 @@ gradle-app.setting
 
 
 **/build/
+.data
 
 .DS_Store
 
