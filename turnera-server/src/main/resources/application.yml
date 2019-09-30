@@ -5,14 +5,35 @@ logging:
     org.springframework.transaction: trace
 ---
 #本地环境
+server:
+  port: 8443
 spring:
-  profiles: local
+  profiles: member1
   application:
     name: 本地环境
 
 logging:
   level:
     org.springframework.transaction: trace
+atomix:
+  clusterId: cluster
+  member:
+    id: member1
+    port: 5677
+  nodes:
+    -
+     id: member1
+     host: localhost
+     port: 5677
+    -
+     id: member2
+     host: localhost
+     port: 5678
+    -
+      id: member3
+      host: localhost
+      port: 5679
+
 ---
 #生产环境
 spring:

@@ -5,10 +5,14 @@
 package org.turnera.server.cluster;
 
 
+import io.atomix.cluster.Member;
 import io.atomix.cluster.Node;
 import io.atomix.cluster.discovery.BootstrapDiscoveryProvider;
 import io.atomix.core.Atomix;
 import io.atomix.protocols.raft.partition.RaftPartitionGroup;
+
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * 集群选举
@@ -54,6 +58,17 @@ public class Aotmix {
                     .build();
 
             atomix.start().join();
+            Set<Member> nodes = atomix.getMembershipService().getMembers();
+            atomix.getMembershipService().addListener(event -> {
+                switch (event.type()) {
+                    case MEMBER_ADDED:
+                        System.out.println(event.subject().id() + " joined the cluster");
+                        break;
+                    case MEMBER_REMOVED:
+                        System.out.println(event.subject().id() + " left the cluster");
+                        break;
+                }
+            });
 
     }
 }
